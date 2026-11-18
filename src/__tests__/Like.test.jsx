@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import App from '../components/App';
 import '@testing-library/jest-dom';
 
@@ -29,11 +29,12 @@ describe("Liking a Toy", () => {
 
         fireEvent.click(likeButton);
 
-        toyCards = await app.findAllByTestId('toy-card')
-        toyCard = toyCards[0]
-        likes = parseInt(toyCard.querySelector('p').textContent.split(' ')[0])
-        
-        expect(likes).toBe(9);
+        await waitFor(() => {
+            toyCards = app.getAllByTestId('toy-card')
+            toyCard = toyCards[0]
+            likes = parseInt(toyCard.querySelector('p').textContent.split(' ')[0])
+            expect(likes).toBe(9)
+        });
 
         global.setFetchResponse({
             "id": 1,
@@ -44,11 +45,12 @@ describe("Liking a Toy", () => {
 
         fireEvent.click(likeButton);
 
-        toyCards = await app.findAllByTestId('toy-card')
-        toyCard = toyCards[0]
-        likes = parseInt(toyCard.querySelector('p').textContent.split(' ')[0])
-        
-        expect(likes).toBe(10);
+        await waitFor(() => {
+            toyCards = app.getAllByTestId('toy-card')
+            toyCard = toyCards[0]
+            likes = parseInt(toyCard.querySelector('p').textContent.split(' ')[0])
+            expect(likes).toBe(10)
+        });
     });
 });
   

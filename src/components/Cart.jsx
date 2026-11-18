@@ -1,6 +1,6 @@
 import React from "react";
 
-function Cart({ cartItems }) {
+function Cart({ cartItems = [] }) {
   return (
     <div className="cart">
       <h2>Shopping Cart</h2>
@@ -10,7 +10,7 @@ function Cart({ cartItems }) {
       ) : (
         <ul>
           {cartItems.map((item, index) => (
-            <li key={index}>
+            <li key={`${item.id ?? item.name ?? "item"}-${index}`}>
               {item.name} is in your cart.
             </li>
           ))}
